@@ -12,49 +12,69 @@ void Game::PrintFighter(const Fighter& fighter) {
     fighter.PrintStatus();
 }
 
+void Game::ReorderEnemies() {
+    int j = 0;
+    for (int i = 0; i < EnemyCount; ++i) {
+        if (enemies[i].IsAlive()) {
+            if (i != j)
+                std::swap(enemies[i], enemies[j]);
+            ++j;
+        }
+    }
+}
+
+void Game::PrintEnemies() {
+    int alive = 0;
+    for (int i = 0; i < EnemyCount; ++i) {
+        if (enemies[i].IsAlive()) {
+            ++alive;
+            std::cout << alive << ". " ;
+            PrintFighter(enemies[i]);
+            std::cout << '\n';
+        }
+    }
+}
+
+int Game::CountAlive() {
+    int alive = 0;
+    for (int i = 0; i < EnemyCount; ++i) {
+        if (enemies[i].IsAlive()) ++alive;
+    }
+    return alive;
+}
+
 void Game::Run() {
+    ReorderEnemies();
     while (true) {
         if (!player.IsAlive()) {
             std::cout << "You already die" << std::endl;
+            break;
+        }
+
+        int alive = CountAlive();
+        if (alive == 0) {
+            std::cout << "You won!\n";
             return;
         }
-        int alive = 0;
+
         std::cout << "Player: ";
         player.PrintStatus();
-        std::cout << std::endl;
-        if (enemies[0].IsAlive()) {
-            alive++;
-            std::cout << alive << ". "<<std::endl;
-            PrintFighter(enemies[0]);
-        }
-        if (enemies[1].IsAlive()) {
-            alive++;
-            std::cout << alive << ". "<<std::endl;
-            PrintFighter(enemies[1]);
-        }
-        if (enemies[2].IsAlive()) {
-            alive++;
-            std::cout << alive << ". "<<std::endl;
-            PrintFighter(enemies[2]);
-        }
+        std::cout << '\n';
+        PrintEnemies();
+        std::cout << '\n';
 
-        if (alive == 0) {
-            std::cout << "You won!" << std::endl;
-            return;
+        int target = MyMethods::getInt("Choose the target", "Try again to choose the target", "Your input is too big to be right number", "This is not number", "Your number is out of range for an int");
+        while (target < 1 || target > alive) {
+            std::cout << "You can't choose this target" <<'\n';
+            PrintEnemies();
+            target = MyMethods::getInt("Choose the target", "Try again to choose the target", "Your input is too big to be right number", "This is not number", "Your number is out of range for an int");
         }
-        std::cout << std::endl;
-        std::cout << "Choose target" << std::endl;
+        --target;
+        player.Attack(enemies[target]);
 
-        char buf[100];
-        while (std::cin >> buf && (buf[0] < '1' || buf[0] > '0' + alive)) {
-            std::cout << "Choose another target" << std::endl;
-        }
-        int pol = buf[0] - '0' - 1;
-        player.Attack(enemies[pol]);
-
-        if (enemies[pol].IsAlive()) {
+        if (enemies[target].IsAlive()) {
             std::cout << "enemy attacks you!" << std::endl;
-            enemies[pol].Attack(player);
+            enemies[target].Attack(player);
             if (!player.IsAlive()) {
                 std::cout << "You die!" << std::endl;
                 return;

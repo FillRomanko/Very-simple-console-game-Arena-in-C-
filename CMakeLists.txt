@@ -9,4 +9,6 @@ add_executable(20260929PPC src/main.cpp
         src/Game.cpp
         src/Game.h
         src/Game.cpp
-        src/Game.h)
+        src/Game.h
+        src/MyMethods.cpp
+        src/MyMethods.h)
