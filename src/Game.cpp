@@ -43,22 +43,32 @@ int Game::CountAlive() {
     return alive;
 }
 
+void Game::EndGame() {
+    char exit = MyMethods::getChar("Input 0 to exit", "If you want to exit, input 0", "This stroke is too long for 0");
+    while (exit != '0') {
+        std::cout << "This is not 0" <<'\n';
+        exit = MyMethods::getChar("Input 0 to exit", "If you want to exit, input 0", "This stroke is too long for 0");
+    }
+}
 void Game::Run() {
     ReorderEnemies();
     while (true) {
+
         if (!player.IsAlive()) {
             std::cout << "You already die" << std::endl;
             break;
         }
 
-        int alive = CountAlive();
-        if (alive == 0) {
+        if (CountAlive() == 0) {
             std::cout << "You won!\n";
-            return;
-        }
+            break;
+        };
+
+        int alive = CountAlive();
+
 
         std::cout << "Player: ";
-        player.PrintStatus();
+        PrintFighter(player);
         std::cout << '\n';
         PrintEnemies();
         std::cout << '\n';
@@ -77,9 +87,9 @@ void Game::Run() {
             enemies[target].Attack(player);
             if (!player.IsAlive()) {
                 std::cout << "You die!" << std::endl;
-                return;
+                break;
             }
         }
     }
+    EndGame();
 }
-

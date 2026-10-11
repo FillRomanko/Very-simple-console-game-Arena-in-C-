@@ -8,8 +8,8 @@ void ClearBadInput(const char* overLength) {
 
 int MyMethods::getInt(const char* request, const char* repeatRequest, const char* overLength, const char* notInt, const char* overIntValue) {
     char buf[int_buf_size];
-
     bool firstTry = true;
+
     while (true) {
         std::cout << (firstTry ? request : repeatRequest) << '\n';
         std::cin.getline(buf, int_buf_size);
@@ -53,5 +53,23 @@ int MyMethods::getInt(const char* request, const char* repeatRequest, const char
         }
 
         return neg ? (int)(-val) : (int)val;
+    }
+}
+
+char MyMethods::getChar(const char* request, const char* repeatRequest, const char* overLength) {
+    char buf;
+    bool firstTry = true;
+
+    while (true) {
+        std::cout << (firstTry ? request : repeatRequest) << '\n';
+        std::cin.get(buf);
+
+        if (std::cin.fail() || std::cin.peek() != '\n') {
+            ClearBadInput(overLength);
+            firstTry = false;
+            continue;
+        }
+
+        return buf;
     }
 }

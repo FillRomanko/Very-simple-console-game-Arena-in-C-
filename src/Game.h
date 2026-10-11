@@ -9,16 +9,18 @@ public:
     Game();
     Game(const Fighter& player, const Fighter (&enemies)[EnemyCount]);
 
-    static void PrintFighter(const Fighter& fighter);
-
     void Run();
 
 private:
     Fighter player;
     Fighter enemies[EnemyCount];
 
-    void ReorderEnemies();
+    static void PrintFighter(const Fighter& fighter);
     void PrintEnemies();
     int CountAlive();
+
+    void ReorderEnemies();
+
+    static void EndGame();
 };
 
