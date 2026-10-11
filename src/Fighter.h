@@ -7,8 +7,12 @@ public:
     Fighter(const char* name, int maxHealth, int health, int damage);
     Fighter(const char* name, int maxHealth, int damage);
     void TakeDamage(int amount);
+
+    void Heal(int amount);
     void Attack(Fighter& target) const;
+
     bool IsAlive() const;
+
     void PrintStatus() const;
 
 private:
