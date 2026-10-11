@@ -1,3 +1,7 @@
+# CLion configuration files
+.idea/
+cmake-build-debug/
+
 # Prerequisites
 *.d
 
