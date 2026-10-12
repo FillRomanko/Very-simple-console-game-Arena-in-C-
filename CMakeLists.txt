@@ -3,12 +3,4 @@ project(20260929PPC)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(20260929PPC src/main.cpp
-        src/Fighter.cpp
-        src/Fighter.h
-        src/Game.cpp
-        src/Game.h
-        src/Game.cpp
-        src/Game.h
-        src/MyMethods.cpp
-        src/MyMethods.h)
+add_executable(20260929PPC main.cpp)
