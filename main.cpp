@@ -49,7 +49,7 @@ bool getIntOnce(const char* request, int& res) {
 
 class Fighter {
 public:
-    Fighter(const char* name, int maxHealth, int health, int damage)
+    Fighter(const char* name, int health, int maxHealth, int damage)
         : name(name), health(health), maxHealth(maxHealth), damage(damage) {}
 
     Fighter(const char* name, int health, int damage)
