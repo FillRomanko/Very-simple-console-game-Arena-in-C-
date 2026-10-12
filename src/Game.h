@@ -15,12 +15,22 @@ private:
     Fighter player;
     Fighter enemies[EnemyCount];
 
+    Fighter* currentTarget = nullptr;
+
+    int medkits = 1;
+    int medkitsPower = 8;
+
     static void PrintFighter(const Fighter& fighter);
-    void PrintEnemies();
-    int CountAlive();
+    void PrintAliveEnemies() const;
+
+    void PrintEnemies() const;
+
+    bool AllEnemiesDefeated() const;
+
+    int CountAlive() const;
+
+    bool TrySelectTarget(int number, Fighter*& outTarget);
 
     void ReorderEnemies();
-
-    static void EndGame();
 };
 

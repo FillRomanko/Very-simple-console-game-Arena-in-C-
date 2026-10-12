@@ -4,8 +4,8 @@
 Fighter::Fighter(const char* name, int maxHealth, int health, int damage)
     : name(name), health(health), maxHealth(maxHealth), damage(damage) {}
 
-Fighter::Fighter(const char* name, int maxHealth, int damage)
-    : name(name), maxHealth(maxHealth), damage(damage), health(maxHealth) {}
+Fighter::Fighter(const char* name, int health, int damage)
+    : name(name), health(health), maxHealth(health), damage(damage) {}
 
 void Fighter::TakeDamage(int amount) {
     if (amount < 0) return;
@@ -14,7 +14,7 @@ void Fighter::TakeDamage(int amount) {
 
 void Fighter::Heal(int amount) {
     if (amount < 0) return;
-    health = maxHealth - amount >= health ? maxHealth : health + amount;
+    health = maxHealth - amount <= health ? maxHealth : health + amount;
 }
 
 void Fighter::Attack(Fighter& target) const {
@@ -26,5 +26,5 @@ bool Fighter::IsAlive() const {
 }
 
 void Fighter::PrintStatus() const {
-    std::cout << name << ": " << health;
+    std::cout << name << " : " << health << "HP";
 }
